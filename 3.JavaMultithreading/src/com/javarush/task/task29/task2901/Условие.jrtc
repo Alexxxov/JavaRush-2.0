@@ -1,0 +1,8 @@
+<div class="wdghtml" taskKey="com.javarush.task.task29.task2901">
+<h3>Рефакторинг в соответствии с Naming and Code Convention</h3>
+<p>Исправить код в соответствии с <strong>Naming and Code Convention</strong> (<span class="text-neon">Shift+F6</span> <em>для рефакторинга</em>).</p>
+<p><strong>Подсказка:<br />
+</strong><em>IDEA не умеет правильно переименовывать имена классов, если меняется только регистр.</em><br />
+Переименуй имя класса во вспомогательное имя, а потом в это же в правильном регистре.</p>
+
+</div>

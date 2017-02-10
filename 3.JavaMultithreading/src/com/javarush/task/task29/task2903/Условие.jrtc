@@ -1,0 +1,8 @@
+<div class="wdghtml" taskKey="com.javarush.task.task29.task2903">
+<h3>И еще раз рефакторинг</h3>
+<p>1. Исправить код в соответствии с <strong>Naming and Code Convention</strong> (<span class="text-neon">Shift+F6</span> <em>для рефакторинга</em>)<br />
+2. Просмотри методы класса <span class="text-corporate"><strong>ConcurrentMap</strong></span>.<br />
+3. В строке &#171;<em><strong>String previousEntry = null;</strong></em>&#187; у <strong><span class="text-corporate">concurrentMap</span></strong> вызови метод, который вставит пару (<strong>randomInt, text</strong>) только для ключа, которого нет в concurrentMap.<br />
+(<em>Вызванный метод должен возвращать предыдущее значение либо </em><span class="text-neon"><strong>null</strong></span><em> для новой пары.</em>)</p>
+
+</div>
