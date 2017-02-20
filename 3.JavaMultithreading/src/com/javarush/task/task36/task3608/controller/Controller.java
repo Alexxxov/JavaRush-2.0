@@ -2,7 +2,6 @@ package com.javarush.task.task36.task3608.controller;
 
 import com.javarush.task.task36.task3608.model.Model;
 import com.javarush.task.task36.task3608.view.UsersView;
-import com.javarush.task.task36.task3608.view.View;
 
 /**
  * Created by Admin on 11.02.2017.
@@ -18,6 +17,11 @@ public class Controller {
     public void onShowAllUsers()
     {
         model.loadUsers();
+        usersView.refresh(model.getModelData());
+    }
+
+    public void onShowAllDeletedUsers() {
+        model.loadDeletedUsers();
         usersView.refresh(model.getModelData());
     }
 

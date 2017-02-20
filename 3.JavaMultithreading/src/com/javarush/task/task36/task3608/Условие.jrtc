@@ -1,4 +1,45 @@
-<div class="wdghtml" taskKey="com.javarush.task.task36.task3608.big04">
+<div class="wdghtml" taskKey="com.javarush.task.task36.task3608.big06">
+<h3>MVC (6)</h3>
+<p>Функционал отображения удаленных пользователей есть, а самих таких пользователей нет. Давай это исправим.<br />
+Давай сделаем новую Вью, которая будет отвечать за редактирование одного конкретного пользователя.<br />
+<strong><span class="text-yellow">UsersView</span></strong> отображает список пользователей.<br />
+<strong><span class="text-yellow">EditUserView</span></strong> будет отображать данные о редактировании конкретного пользователя.<br />
+Для этого нам сначала нужен этот выбранный пользователь.<br />
+Как и любые данные его поместим в <span class="text-yellow"><strong>ModelData</strong></span>.</p>
+<p>1. Создай в <strong><span class="text-yellow">ModelData</span></strong> поле <span class="text-corporate">User</span> <mark class="user">activeUser</mark> с геттером и сеттером (<span class="text-neon">Alt+Insert -&gt; Getter and Setter</span>).</p>
+<p>2. Аналогично <strong><span class="text-yellow">UsersView</span></strong> создай <strong><span class="text-yellow">EditUserView</span></strong>.<br />
+Логика метода <mark>refresh</mark>:<br />
+2.1. Вывести в консоль &#171;<em><strong>User to be edited:</strong></em>&#171;.<br />
+2.2. С новой строки вывести табуляцию и активного пользователя.<br />
+2.3. С новой строки вывести разделитель &#171;===================================================&#187;.</p>
+<p>3. Создай в контроллере поле <span class="text-corporate">EditUserView</span> <mark class="user">editUserView</mark> с сеттером.</p>
+<p>Когда наши данные выводятся в консоль, то совсем не понятно, список каких пользователей &#8212; удаленных или нет &#8212; выводится.<br />
+Давай сделаем так, чтобы Вью отображала эту информацию. Все данные для отображения хранятся в Моделе.</p>
+<p><strong>Поэтому:</strong><br />
+4. создай в <strong><span class="text-yellow">ModelData</span></strong> поле <mark>boolean displayDeletedUserList</mark> с <strong>геттером</strong> и <strong>сеттером</strong>.</p>
+<p>5. Измени метод <mark>refresh</mark> в <strong><span class="text-yellow">UsersView</span></strong> так, чтобы он отображал &#171;<em><strong>All users:</strong></em>&#187; либо &#171;<em><strong>All deleted users:</strong></em>&#187;<br />
+в зависимости от того, какие пользователи находятся в списке.<br />
+Добавь в необходимые методы модели изменение <strong><span class="text-yellow">displayDeletedUserList</span></strong>.</p>
+
+<hr>
+<h3>MVC (5)</h3>
+<p>В сервисе есть метод, который возвращает всех удаленных пользователей. Давай их отобразим.</p>
+<p>1. Распредели методы по классам <strong>MVC</strong>:</p>
+<p><span class="text-neon">public void fireEventShowDeletedUsers() {</span><br />
+<span class="text-neon"> &#8230;onShowAllDeletedUsers();</span><br />
+<span class="text-neon"> }</span></p>
+<p><span class="text-neon">public void onShowAllDeletedUsers() {</span><br />
+<span class="text-neon"> &#8230;loadDeletedUsers();</span><br />
+<span class="text-neon"> }</span></p>
+<p><span class="text-neon">public void loadDeletedUsers() {</span><br />
+<span class="text-neon"> List&lt;User&gt; users = userService.getAllDeletedUsers();</span><br />
+<span class="text-neon"> }</span></p>
+<p>Не забудь, что данные, полученные с сервера, необходимо положить в <strong><span class="text-yellow">ModelData</span></strong>. А потом обновить <mark class="green">view</mark>.<br />
+Добавь это самостоятельно в нужные методы.</p>
+<p>2. Добавь в <strong>Solution.main</strong> вызов нового метода, который ты поместил в <mark class="green">view</mark>.</p>
+<p>3. Добавь в интерфейс <span class="text-red">Model</span> метод, который ты поместил в <strong>Модель</strong>, реализуй его в <span class="text-yellow"><strong>FakeModel</strong></span>: выброси <mark class="user">UnsupportedOperationException</mark>.</p>
+
+<hr>
 <h3>MVC (4)</h3>
 <p>Пора заменять нашу фейковую Модель на реальную, которая будет получать данные из <strong><span class="text-corporate">DataSource</span></strong>.<br />
 В пакет <strong><span class="text-red">model.service</span></strong> я добавил сервис для работы с пользователями.<br />
