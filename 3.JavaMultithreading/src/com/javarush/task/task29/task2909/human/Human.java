@@ -27,9 +27,18 @@ public class Human implements Alive {
         children.remove(human);
     }
 
-     public Human(String name, int age) {
+    public Human(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    public String getPosition()
+    {
+        return "Человек";
+    }
+
+    public void printData() {
+        System.out.println( getPosition() + ": " + name);
     }
 
     public int getAge() {
