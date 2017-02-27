@@ -6,10 +6,27 @@ import java.util.List;
 
 public class Human implements Alive {
 
+    private static int nextId = 0;
+    private int id;
+
+    private BloodGroup bloodGroup;
+
+    protected Size size;
+
     protected int age;
     protected String name;
 
-    protected int[] size;
+    public class Size
+    {
+        public Size(int height, int weight)
+        {
+            this.height = height;
+            this.weight = weight;
+        }
+
+        public int height;
+        public int weight;
+    }
 
     private final List<Human> children = new ArrayList<>();
 
@@ -30,6 +47,12 @@ public class Human implements Alive {
     public Human(String name, int age) {
         this.name = name;
         this.age = age;
+        this.id = nextId;
+        nextId++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPosition()
@@ -53,7 +76,15 @@ public class Human implements Alive {
     public void live() {
     }
 
+    public BloodGroup getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(BloodGroup bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
     public void printSize() {
-        System.out.println("Рост: " + size[0] + " Вес: " + size[1]);
+        System.out.println("Рост: " + size.height + " Вес: " + size.weight);
     }
 }
