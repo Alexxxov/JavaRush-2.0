@@ -1,0 +1,6 @@
+<div class="wdghtml" taskKey="com.javarush.task.task29.task2906">
+<h3>Особенности автобоксинга - 2</h3>
+<p>Исправь ошибку реализации, приводящую к <mark class="user">NullPointerException</mark>, в методе <mark>getValue</mark>.<br />
+Читай доп. статью про особенности автобоксинга.</p>
+
+</div>
