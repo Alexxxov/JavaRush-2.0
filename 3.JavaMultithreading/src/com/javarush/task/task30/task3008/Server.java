@@ -35,10 +35,10 @@ public class Server {
 
     public static void sendBroadcastMessage(Message message)
     {
-        for (Connection con :connectionMap.values())
+        for (Connection connection :connectionMap.values())
             try
             {
-                con.send(message);
+                connection.send(message);
             }
             catch (IOException ioe)
             {
@@ -74,6 +74,33 @@ public class Server {
                 }
             }
             return clientName;
+        }
+
+        private void sendListOfUsers(Connection connection, String userName) throws IOException
+        {
+            for (Map.Entry<String, Connection> entry: connectionMap.entrySet())
+            {
+                if (entry.getKey().equals(userName))
+                    continue;
+                Message msg = new Message(MessageType.USER_ADDED, entry.getKey());
+                connection.send(msg);
+            }
+        }
+
+        private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException
+        {
+            while (true)
+            {
+                Message userMsg = connection.receive();
+                if (userMsg.getType() == MessageType.TEXT)
+                {
+                    Message toAllMsg = new Message(MessageType.TEXT, userName + ": " + userMsg.getData());
+                    sendBroadcastMessage(toAllMsg);
+                }
+                else
+                    ConsoleHelper.writeMessage("Error occured, check your message data type");
+            }
+
         }
     }
 
