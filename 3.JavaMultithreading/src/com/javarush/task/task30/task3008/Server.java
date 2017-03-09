@@ -3,6 +3,7 @@ package com.javarush.task.task30.task3008;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -100,7 +101,31 @@ public class Server {
                 else
                     ConsoleHelper.writeMessage("Error occured, check your message data type");
             }
+        }
 
+        public void run()
+        {
+            ConsoleHelper.writeMessage("Conncetion established " + socket.getRemoteSocketAddress());
+            String userName = null;
+
+            try(Connection connection = new Connection(socket))
+            {
+                userName = serverHandshake(connection);
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED, userName));
+                sendListOfUsers(connection, userName);
+                serverMainLoop(connection, userName);
+            }
+            catch (IOException | ClassNotFoundException e)
+            {
+                ConsoleHelper.writeMessage("Exception occured, while transferring data with remote address " + socket.getRemoteSocketAddress());
+            }
+
+            if (userName != null)
+            {
+                connectionMap.remove(userName);
+                sendBroadcastMessage(new Message(MessageType.USER_REMOVED, userName));
+            }
+            ConsoleHelper.writeMessage("Connection with remote address" + socket.getRemoteSocketAddress() + " has been terminated");
         }
     }
 
