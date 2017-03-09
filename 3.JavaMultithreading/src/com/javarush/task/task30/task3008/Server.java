@@ -3,7 +3,6 @@ package com.javarush.task.task30.task3008;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,12 +15,12 @@ public class Server {
 
     public static void main(String[] args)
     {
-
         ConsoleHelper.writeMessage("Введите порт сервера:");
         int port = ConsoleHelper.readInt();
+
         try(ServerSocket serverSocket = new ServerSocket(port))
         {
-            ConsoleHelper.writeMessage("Сервер запущен на порту:" + port);
+            ConsoleHelper.writeMessage("Сервер запущен на порту: " + port);
             while (true)
             {
                 Socket newSocket = serverSocket.accept();
@@ -43,7 +42,7 @@ public class Server {
             }
             catch (IOException ioe)
             {
-                ConsoleHelper.writeMessage("Exception occured, message cant be sent.");
+                ConsoleHelper.writeMessage("Ошибка при отправке сообщения клиенту");
             }
     }
 
@@ -99,13 +98,14 @@ public class Server {
                     sendBroadcastMessage(toAllMsg);
                 }
                 else
-                    ConsoleHelper.writeMessage("Error occured, check your message data type");
+                    ConsoleHelper.writeMessage(String.format("Ошибка! Недопустимый тип сообщения (MessageType.%s) от клиента: %s",
+                                    userMsg.getType().toString() ,userName));
             }
         }
 
         public void run()
         {
-            ConsoleHelper.writeMessage("Conncetion established " + socket.getRemoteSocketAddress());
+            ConsoleHelper.writeMessage("Установлено соединение с удаленным клиентом с адресом: " + socket.getRemoteSocketAddress());
             String userName = null;
 
             try(Connection connection = new Connection(socket))
@@ -117,7 +117,7 @@ public class Server {
             }
             catch (IOException | ClassNotFoundException e)
             {
-                ConsoleHelper.writeMessage("Exception occured, while transferring data with remote address " + socket.getRemoteSocketAddress());
+                ConsoleHelper.writeMessage(String.format("Произошл ошибка при передачи данных с удаленным адресом %s.", socket.getRemoteSocketAddress()));
             }
 
             if (userName != null)
@@ -125,7 +125,7 @@ public class Server {
                 connectionMap.remove(userName);
                 sendBroadcastMessage(new Message(MessageType.USER_REMOVED, userName));
             }
-            ConsoleHelper.writeMessage("Connection with remote address" + socket.getRemoteSocketAddress() + " has been terminated");
+            ConsoleHelper.writeMessage(String.format("Соединение с удаленным адресом (%s) закрыто.", socket.getRemoteSocketAddress()));
         }
     }
 
