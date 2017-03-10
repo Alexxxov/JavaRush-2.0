@@ -6,6 +6,7 @@ import com.javarush.task.task30.task3008.Message;
 import com.javarush.task.task30.task3008.MessageType;
 
 import java.io.IOException;
+import java.net.Socket;
 
 /**
  * Created by Admin on 09.03.2017.
@@ -87,6 +88,25 @@ public class Client {
                         informAboutDeletingNewUser(msg.getData());
                         break;
                 }
+            }
+        }
+
+        public void run()
+        {
+            try
+            {
+                Socket socket = new Socket(getServerAddress(), getServerPort());
+                connection = new Connection(socket);
+                clientHandshake();
+                clientMainLoop();
+            }
+            catch (IOException ioe)
+            {
+                notifyConnectionStatusChanged(false);
+            }
+            catch (ClassNotFoundException cnfe)
+            {
+                notifyConnectionStatusChanged(false);
             }
         }
     }
