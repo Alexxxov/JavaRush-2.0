@@ -1,22 +1,19 @@
 package com.javarush.task.task31.task3110;
 
 import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Admin on 08.11.2017.
- */
 public class FileManager {
-
     private Path rootPath;
     private List<Path> fileList;
 
     public FileManager(Path rootPath) throws IOException {
         this.rootPath = rootPath;
-        fileList = new ArrayList<>();
+        this.fileList = new ArrayList<>();
         collectFileList(rootPath);
     }
 
@@ -25,32 +22,21 @@ public class FileManager {
     }
 
     private void collectFileList(Path path) throws IOException {
-
+        // Добавляем только файлы
         if (Files.isRegularFile(path)) {
-            fileList.add(rootPath.relativize(path));
-        } else if (Files.isDirectory(path)) {
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path);) {
-                for (Path item : directoryStream) {
-                    collectFileList(item);
+            Path relativePath = rootPath.relativize(path);
+            fileList.add(relativePath);
+        }
+
+        // Добавляем содержимое директории
+        if (Files.isDirectory(path)) {
+            // Рекурсивно проходимся по всему содержмому директории
+            // Чтобы не писать код по вызову close для DirectoryStream, обернем вызов newDirectoryStream в try-with-resources
+            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
+                for (Path file : directoryStream) {
+                    collectFileList(file);
                 }
             }
         }
-
-//        if(Files.isRegularFile(path))
-//        {
-//            fileList.add(rootPath.relativize(path));
-//        }
-//        if (Files.isDirectory(path)) {
-//            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-//
-//                @Override
-//                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-//                    fileList.add(file);
-//                    return FileVisitResult.CONTINUE;
-//                }
-//
-//            });
-//        }
-
     }
 }
